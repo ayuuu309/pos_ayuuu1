@@ -143,6 +143,8 @@ class ProdukController extends Controller
     {
         $this->authorize('delete', $produk);
 
+        // Cek apakah produk sudah digunakan dalam transaksi penjualan if ($produk->itemPenjualan()->exists()) { return redirect() ->route('produk.index') ->with( 'error', 'Produk "' . $produk->nama . '" tidak dapat dihapus karena sudah digunakan dalam transaksi penjualan.' ); } 
+
         if ($produk->foto && Storage::disk('public')->exists($produk->foto)) {
             Storage::disk('public')->delete($produk->foto);
         }

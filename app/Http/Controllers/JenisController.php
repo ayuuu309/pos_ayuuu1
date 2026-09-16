@@ -99,7 +99,14 @@ class JenisController extends Controller
      * Menghapus data jenis.
      */
     public function destroy(Jenis $jeni)
-    {
+    { 
+        // Cek apakah jenis masih digunakan oleh produk
+if ($jeni->produk()->exists()) {
+return redirect()
+->route('jenis.index')
+->with('error', 'Jenis "' . $jeni->nama_jenis . '" tidak dapat dihapus karena masih digunakan oleh produk.');
+}
+
         $jeni->delete();
 
         return redirect()
